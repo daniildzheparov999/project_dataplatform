@@ -10,5 +10,11 @@ git remote -v
 #Push changes to repository 
 git push origin main
 
+#Add new branch 
+git checkout -b <branch-name>
+
+#Push to new branch 
+git push origin <branch-name>
+
 #Remove local project from remote repository 
 git remote remove origin
