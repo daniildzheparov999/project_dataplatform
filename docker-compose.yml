@@ -1,0 +1,40 @@
+services:
+  postgres_dp:
+    image: postgres
+    environment:
+      POSTGRES_DB: "platform_db"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - .:/var/lib/postgresql/data
+    ports:
+      - '5435:5432'
+    networks:
+      - platform
+
+  ch_server:
+    image: yandex/clickhouse-server
+    environment:
+      CLICKHOUSE_DB: "clch_db"
+      CLICKHOUSE_USER: "admin1"
+      CLICKHOUSE_PASSWORD: "admin1"
+    ports:
+      - "8123:8123"
+    volumes:
+      - ./db:/var/lib/clickhouse
+    networks:
+        - platform
+
+#Install django app from built image 
+  app:
+    image: daniildzheparov/django_app:v2
+    command: python3 manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    networks:
+        - platform
+
+networks:
+  platform:

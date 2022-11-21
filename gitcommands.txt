@@ -1,0 +1,14 @@
+#Adding local project to repository
+https://docs.github.com/en/get-started/importing-your-projects-to-github/importing-source-code-to-github/adding-locally-hosted-code-to-github
+
+git init -b main
+git add .
+git commit -m "First commit"
+git remote add origin <REMOTE_URL>
+git remote -v
+
+#Push changes to repository 
+git push origin main
+
+#Remove local project from remote repository 
+git remote remove origin
