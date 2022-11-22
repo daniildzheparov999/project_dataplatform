@@ -3,8 +3,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from EmployeeApp.models import Departments,Employees
-from EmployeeApp.serializers import DepartmentSerializer,EmployeeSerializer
+from EmployeeApp.models import Departments,Employees, Worklogs
+from EmployeeApp.serializers import DepartmentSerializer,EmployeeSerializer, WorklogSerializer
 
 from django.core.files.storage import default_storage
 
@@ -69,3 +69,28 @@ def SaveFile(request):
                     file_name=default_storage.save(file.name,file)
                     return JsonResponse(file_name,safe=False)
 
+@csrf_exempt
+def worklogApi(request, id=0):
+          if request.method=='GET':
+                    worklogs = Worklogs.objects.all()
+                    worklogs_serializer = WorklogSerializer(worklogs, many=True)
+                    return JsonResponse(worklogs_serializer.data, safe=False)
+          elif request.method=='POST':
+                    worklog_data = JSONParser().parse(request)
+                    worklogs_serializer = WorklogSerializer(data=worklog_data)
+                    if worklogs_serializer.is_valid():
+                              worklogs_serializer.save()
+                              return JsonResponse('Added Successfully', safe=False)
+                    return JsonResponse('Failed to Add', safe=False)
+          elif request.method=='PUT':
+                    worklog_data=JSONParser().parse(request)
+                    worklog=Worklogs.objects.get(WorklogId=worklog_data['WorklogId'])
+                    worklogs_serializer=WorklogSerializer(worklog, data=worklog_data)
+                    if worklogs_serializer.is_valid():
+                              worklogs_serializer.save()
+                              return JsonResponse('Update Successfully', safe=False)
+                    return JsonResponse('Failed to Update')
+          elif request.method=='DELETE':
+                    worklog=Worklogs.objects.get(WorklogId=id)
+                    worklog.delete()
+                    return JsonResponse('Deleted Successfully', safe=False)

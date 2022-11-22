@@ -11,5 +11,8 @@ urlpatterns=[
           url(r'^employee$',views.employeeApi),
           url(r'^employee/[0-9]+',views.employeeApi),
 
-          url(r'^employee/savefile',views.SaveFile)
+          url(r'^employee/savefile',views.SaveFile),
+
+          url(r'^worklog$',views.worklogApi),
+          url(r'^worklog/[0-9]+',views.worklogApi)
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

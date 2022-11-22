@@ -27,14 +27,5 @@ services:
     networks:
         - platform
 
-#Install django app from built image 
-  app:
-    image: daniildzheparov/django_app:v2
-    command: python3 manage.py runserver 0.0.0.0:8000
-    ports:
-      - "8000:8000"
-    networks:
-        - platform
-
 networks:
   platform:
