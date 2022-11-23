@@ -1,7 +1,8 @@
 const routes=[
           {path:'/home',component:home},
           {path:'/employee',component:employee},
-          {path:'/department',component:department}
+          {path:'/department',component:department},
+          {path:'/worklog',component:worklog}
       ]
       
       const router = VueRouter.createRouter({
