@@ -28,5 +28,14 @@ services:
     networks:
         - platform
 
+  ch_client:
+    image: yandex/clickhouse-client
+    entrypoint:
+      - /bin/sleep
+    command:
+      - infinity
+    networks:
+        - platform
+
 networks:
   platform:
