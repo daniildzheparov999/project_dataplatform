@@ -1,6 +1,12 @@
 from airflow import DAG
 from datetime import datetime 
 from airflow.operators.postgres_operator import PostgresOperator
+from airflow.operators.python_operator import PythonOperator 
+import clickhouse_connect
+
+def clch_insert(table_name, df):
+          client = clickhouse_connect.get_client(host='localhost', username='admin1', password='admin1')
+          
 
 with DAG(
           dag_id='etl_dag_test',

@@ -19,8 +19,8 @@ services:
     image: yandex/clickhouse-server
     environment:
       CLICKHOUSE_DB: "clch_db"
-      CLICKHOUSE_USER: "admin1"
-      CLICKHOUSE_PASSWORD: "admin1"
+      CLICKHOUSE_USER: "default"
+      CLICKHOUSE_PASSWORD: "default"
     ports:
       - "8123:8123"
     volumes:
