@@ -24,7 +24,7 @@ def load_dep_data(table_name, ti):
 
 def load_emp_data(table_name, ti):
           import clickhouse_connect
-          data = ti.xcom_pull(task_ids='extract_employee')
+          data = extract_data('EmployeeApp_employees')
           client = clickhouse_connect.get_client(host='host.docker.internal', username='default', password='default')
           client.command(f'TRUNCATE {table_name}')
           client.insert(table_name, data) 
@@ -59,11 +59,11 @@ with DAG(
                    op_kwargs={'table_name':'clch_db.departments'} 
           )
 
-          extract_employee = PythonOperator(
-                    task_id = 'extract_employee',
-                    python_callable=extract_data,
-                    op_kwargs={'table_name':'EmployeeApp_employees'}
-          )
+          #extract_employee = PythonOperator(
+          #          task_id = 'extract_employee',
+          #          python_callable=extract_data,
+          #          op_kwargs={'table_name':'EmployeeApp_employees'}
+          #)
 
           load_employee = PythonOperator(
                    task_id = 'load_employee',
@@ -85,5 +85,5 @@ with DAG(
 
 
           extract_department >> load_department
-          extract_employee >> load_employee
+          load_employee
           extract_worklog >> load_worklog
