@@ -16,10 +16,10 @@ data-bs-target="#exampleModal"
             Worklog Id
         </th>
         <th>
-            Department
+            Employee Id
         </th>
         <th>
-            Employee Name
+            Worklog Date
         </th>
         <th>
             Worklog Hours
@@ -32,8 +32,8 @@ data-bs-target="#exampleModal"
 <tbody>
     <tr v-for="wkl in worklog">
         <td>{{wkl.WorklogId}}</td>
-        <td>{{wkl.Department}}</td>
-        <td>{{wkl.Employee}}</td>
+        <td>{{wkl.EmployeeId}}</td>
+        <td>{{wkl.WorklogDate}}</td>
         <td>{{wkl.WorklogHours}}</td>
         <td>
             <button type="button"
@@ -73,21 +73,17 @@ data-bs-target="#exampleModal"
     <div class="d-flex flex-row bd-highlight mb-3">
         <div class="p-2 w-50 bd-highlight">
             <div class="input-group mb-3">
-                <span class="input-group-text">Department</span>
-                <select class="form-select" v-model="Department">
-                    <option v-for="dep in departments">
-                    {{dep.DepartmentName}}
+                <span class="input-group-text">Employee Id</span>
+                <select class="form-select" v-model="Employee">
+                    <option v-for="emp in employees">
+                    {{emp.EmployeeId}}
                     </option>
                 </select>
             </div>
 
             <div class="input-group mb-3">
-                <span class="input-group-text">Employee Name</span>
-                <select class="form-select" v-model="Employee">
-                    <option v-for="emp in employees">
-                    {{emp.EmployeeName}}
-                    </option>
-                </select>
+                <span class="input-group-text">Worklog Date</span>
+                <input type="date" class="form-control" v-model="WorklogDate">
             </div>
 
             <div class="input-group mb-3">
@@ -124,11 +120,9 @@ data(){
         employees:[],
         modalTitle:"",
         WorklogId:0,
-        Department:"",
-        Employee:"",
-        WorklogHours:"",
-        PhotoFileName:"anonymous.png",
-        PhotoPath:variables.PHOTO_URL
+        EmployeeId:"",
+        WorklogDate:"",
+        WorklogHours:""
     }
 },
 methods:{
@@ -151,8 +145,8 @@ methods:{
     addClick(){
         this.modalTitle="Add Worklog";
         this.WorklogId=0;
-        this.Department="",
-        this.Employee="",
+        this.EmployeeId="",
+        this.WorklogDate="",
         this.WorklogHours=""
     },
     editClick(wkl){
@@ -164,8 +158,8 @@ methods:{
     },
     createClick(){
         axios.post(variables.API_URL+"worklog",{
-            Department:this.Department,
             Employee:this.Employee,
+            Department:this.Department,
             WorklogHours:this.WorklogHours
         })
         .then((response)=>{

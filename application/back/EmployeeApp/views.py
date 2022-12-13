@@ -62,12 +62,6 @@ def employeeApi(request, id=0):
                     employee.delete()
                     return JsonResponse('Deleted Successfully', safe=False)
 
-@csrf_exempt
-def SaveFile(request):
-          if request.method == "POST":
-                    file=request.FILES['file']
-                    file_name=default_storage.save(file.name,file)
-                    return JsonResponse(file_name,safe=False)
 
 @csrf_exempt
 def worklogApi(request, id=0):

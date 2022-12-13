@@ -11,10 +11,9 @@ class Employees(models.Model):
           EmployeeName = models.CharField(max_length=500)
           Department = models.CharField(max_length=500)
           DateOfJoining = models.DateField()
-          PhotoFileName = models.CharField(max_length=500)
 
 class Worklogs(models.Model):
           WorklogId = models.AutoField(primary_key=True)
-          Department = models.CharField(max_length=500)
-          Employee = models.CharField(max_length=500)
+          EmployeeId = models.CharField(max_length=500)
+          WorklogDate = models.DateField()
           WorklogHours = models.CharField(max_length=500)

@@ -9,9 +9,9 @@ class DepartmentSerializer(serializers.ModelSerializer):
 class EmployeeSerializer(serializers.ModelSerializer):
           class Meta:
                     model=Employees
-                    fields=('EmployeeId', 'EmployeeName', 'Department', 'DateOfJoining', 'PhotoFileName')
+                    fields=('EmployeeId', 'EmployeeName', 'Department', 'DateOfJoining')
 
 class WorklogSerializer(serializers.ModelSerializer):
           class Meta:
                     model=Worklogs
-                    fields=('WorklogId', 'Department', 'Employee', 'WorklogHours')
+                    fields=('WorklogId', 'EmployeeId', 'WorklogDate', 'WorklogHours')
