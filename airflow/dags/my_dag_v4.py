@@ -39,10 +39,28 @@ def load_wkl_data(table_name):
           client.insert(table_name, data) 
           return ('Successfully Added!')
 
+def create_dm():
+          import clickhouse_connect
+          client = clickhouse_connect.get_client(host='host.docker.internal', username='default')
+          client.command('CREATE TABLE IF NOT EXISTS clch_db.worklogs_dm \
+                              ENGINE = Memory \
+                              AS \
+                              SELECT w.worklog_id, \
+                              emp.employee_name,  \
+                              emp.department_name, \
+                              emp.date_of_joining, \
+                              w.worklog_date, \
+                              toInt32(w.worklog_hours) as worklog_hours  \
+                              FROM clch_db.worklogs w \
+                              LEFT JOIN clch_db.employees emp \
+                              ON w.employee_id = toString(emp.employee_id); \
+                              ')
+          return ('Successfully Added!')
+
 
 with DAG(
-          dag_id='etl_dag_v3',
-          start_date=datetime(2022, 11, 27),
+          dag_id='etl_dag_v4',
+          start_date=datetime(2022, 12, 13),
           schedule_interval='@once',
           catchup=False
 ) as dag:
@@ -75,7 +93,13 @@ with DAG(
                     task_id='sync_end'
           )
 
+          dm_create = PythonOperator(
+                    task_id = 'create_dm',
+                    python_callable=create_dm
+          )
+
 
           sync1 >> load_department >> sync2
           sync1 >> load_employee >> sync2
           sync1 >> load_worklog >> sync2
+          sync2 >> dm_create

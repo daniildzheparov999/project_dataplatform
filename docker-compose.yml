@@ -2,14 +2,11 @@ version: "3.7"
 services:
   ch_server:
     image: yandex/clickhouse-server
-    environment:
-      CLICKHOUSE_DB: "clch_db"
-      CLICKHOUSE_USER: "default"
-      CLICKHOUSE_PASSWORD: "default"
     ports:
       - "8123:8123"
     volumes:
-      - ./db:/var/lib/clickhouse
+      - ./clickhouse/data:/var/lib/clickhouse
+      - ./clickhouse/log:/var/lib/clickhouse-server
     networks:
         - platform
 
