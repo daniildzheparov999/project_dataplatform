@@ -74,7 +74,7 @@ data-bs-target="#exampleModal"
         <div class="p-2 w-50 bd-highlight">
             <div class="input-group mb-3">
                 <span class="input-group-text">Employee Id</span>
-                <select class="form-select" v-model="Employee">
+                <select class="form-select" v-model="EmployeeId">
                     <option v-for="emp in employees">
                     {{emp.EmployeeId}}
                     </option>
@@ -152,14 +152,14 @@ methods:{
     editClick(wkl){
         this.modalTitle="Edit Worklogs";
         this.WorklogId=wkl.WorklogId;
-        this.Department=wkl.Department;
-        this.Employee=wkl.Employee,
+        this.EmployeeId=wkl.EmployeeId;
+        this.WorklogDate=wkl.WorklogDate,
         this.WorklogHours=wkl.WorklogHours
     },
     createClick(){
         axios.post(variables.API_URL+"worklog",{
-            Employee:this.Employee,
-            Department:this.Department,
+            EmployeeId:this.EmployeeId,
+            WorklogDate:this.WorklogDate,
             WorklogHours:this.WorklogHours
         })
         .then((response)=>{
@@ -170,8 +170,8 @@ methods:{
     updateClick(){
         axios.put(variables.API_URL+"worklog",{
             WorklogId:this.WorklogId,
-            Department:this.Department,
-            Employee:this.Employee,
+            EmployeeId:this.EmployeeId,
+            WorklogDate:this.WorklogDate,
             WorklogHours:this.WorklogHours
         })
         .then((response)=>{
