@@ -1,0 +1,5 @@
+pgdata/
+db/
+airflow/logs
+clickhouse/data
+clickhouse/log

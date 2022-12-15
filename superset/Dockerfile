@@ -1,2 +1,3 @@
 FROM apache/superset 
-EXPOSE 8088
+USER root
+RUN pip install clickhouse-connect
