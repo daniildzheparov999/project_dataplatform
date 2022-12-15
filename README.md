@@ -10,6 +10,7 @@ Here you can find the short instruction how to implement this platform locally i
 
 You can find it and download using this link https://www.docker.com/products/docker-desktop/ 
 
+
 #### 2. Pull this repository 
 
 Firstly, you need to make sure, that you have installed Git in ypur machine. Otherwise, you will need to install it. 
@@ -33,6 +34,7 @@ $ git pull https://github.com/daniildzheparov999/project_dataplatform.git
 
 After that you will have all code in your local machine 
 
+
 #### 3. Install Application
 
 Move to folder application 
@@ -45,6 +47,20 @@ $ docker-compose up
 
 You will get the application with postgres database, django backend and vue js frontend
 
+Go into 'back_django' conatiner and execute commands 
+
+$ python manage.py makemigrations 
+$ python manage.py migrate
+$ python manage.py runserver
+
+Backend server should work
+
+Go to http://localhost:8087/#/ to see the UI of the application, which should be avalible on the container 'front'
+
+All data from the application will be stored in postgres database, to which you can connect using credentials from docker-compose.yaml file
+
+
+
 #### 4. Install Clickhouse
 
 Move to core project folder and run docker-compose.yaml file 
@@ -53,6 +69,14 @@ $ docker-compose up
 
 After that you will get running containers with clickhouse client and clickhouse server 
 
+To connect to clickhouse you can use DBeaver and credentials from docker-compose.yaml file
+
+HOST - localhost or the name of the container 'ch_server'
+PORT - 8123 
+USER - default 
+PASSWORD - keep empty
+
+
 #### 5. Install Airflow
 
 Move to airflow folder and run docker-compose.yaml file 
@@ -60,6 +84,8 @@ $ cd airflow
 $ docker-compose up 
 
 After initialization process you will get available and ready to use Airflow on http://localhost:8080 
+
+You can use DAG 'etl_dag_v4' and trigger it to execute data from postgres database and load it into clickhouse
 
 #### 6. Install Superset
 
