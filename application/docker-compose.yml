@@ -1,6 +1,7 @@
 version: "3.7"
 services:
   db:
+    container_name: postgres
     image: postgres
     environment:
       POSTGRES_DB: "platform_db"
@@ -21,12 +22,13 @@ services:
     volumes:
       - ./back:/app
     ports:
-      - 8000:8000
+      - 8001:8000
     depends_on:
       - db
 
   front:
-    image: daniildzheparov/front_app:v1
+    image: daniildzheparov/front_app:v2
+    container_name: front
     volumes:
       - ./front:/my_project
     ports:

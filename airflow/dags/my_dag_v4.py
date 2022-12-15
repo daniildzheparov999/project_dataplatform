@@ -42,9 +42,8 @@ def load_wkl_data(table_name):
 def create_dm():
           import clickhouse_connect
           client = clickhouse_connect.get_client(host='host.docker.internal', username='default')
-          client.command('CREATE TABLE IF NOT EXISTS clch_db.worklogs_dm \
-                              ENGINE = Memory \
-                              AS \
+          client.command('TRUNCATE clch_db.worklogs_dm')
+          client.command('INSERT INTO clch_db.worklogs_dm \
                               SELECT w.worklog_id, \
                               emp.employee_name,  \
                               emp.department_name, \
